@@ -46,7 +46,7 @@ export default function Index() {
 
           <TouchableOpacity style={styles.addButton} onPress={handleCreateNote}>
             <View style={styles.addButtonInner}>
-              <Text>+</Text>
+              <Text>➕</Text>
             </View>
           </TouchableOpacity>
         </View>
