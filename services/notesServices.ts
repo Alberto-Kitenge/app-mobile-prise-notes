@@ -8,13 +8,13 @@ import {
   serverTimestamp,
   updateDoc,
 } from "firebase/firestore";
-import { db } from "../config/firebaseConfig";
+import { db } from "@/config/firebaseConfig";
 import {
   CreateNote,
   Note,
   ServiceResponse,
   UpdateNote,
-} from "../types/notesTypes";
+} from "@/types/notesTypes";
 
 const NOTES_COLLECTION = "notes";
 
