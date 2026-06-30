@@ -4,8 +4,8 @@ import {
   deleteNote,
   getNotes,
   updateNote,
-} from "../services/notesServices";
-import { NotesActions, NotesState } from "../types/notesTypes";
+} from "@/services/notesServices";
+import { NotesActions, NotesState } from "@/types/notesTypes";
 
 export const useNotesStore = create<NotesActions & NotesState>((set, get) => ({
   notes: [],

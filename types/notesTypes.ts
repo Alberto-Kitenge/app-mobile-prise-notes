@@ -1,17 +1,17 @@
-import { NOTE_CATEGORIES, NOTE_COLORS } from "../constants/notesConstants";
+import { NOTE_CATEGORIES, NOTE_COLORS } from "@/constants/notesConstants";
 
 export interface Note {
   id: string;
   title: string;
   description: string;
-  category: NOTE_CATEGORIES;
-  color?: NOTE_COLORS;
+  category: NoteCategory;
+  color?: NoteColor;
   createdAt?: Date;
   updatedAt?: Date;
 }
 
-export type NOTE_CATEGORIES = (typeof NOTE_CATEGORIES)[number];
-export type NOTE_COLORS = (typeof NOTE_COLORS)[number];
+export type NoteCategory = (typeof NOTE_CATEGORIES)[number];
+export type NoteColor = (typeof NOTE_COLORS)[number];
 
 export interface NotesState {
   notes: Note[];
@@ -47,16 +47,16 @@ export interface ModalNoteProps {
 export interface CreateNote {
   title: string;
   description: string;
-  category: NOTE_CATEGORIES;
-  color?: NOTE_COLORS;
+  category: NoteCategory;
+  color?: NoteColor;
 }
 
 export interface UpdateNote {
   id: string;
   title?: string;
   description?: string;
-  category?: NOTE_CATEGORIES;
-  color?: NOTE_COLORS;
+  category?: NoteCategory;
+  color?: NoteColor;
 }
 
 export interface ListNotesProps {
