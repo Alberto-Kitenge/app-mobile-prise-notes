@@ -1,56 +1,120 @@
-# Welcome to your Expo app 👋
+# app-mobile-prise-notes
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**Organisez vos idées** — application mobile de prise de notes, synchronisée avec Firebase.
 
-## Get started
+Expo 56 · React Native · Firebase Firestore · Zustand
 
-1. Install dependencies
+---
 
-   ```bash
-   npm install
-   ```
+## Fonctionnalités
 
-2. Start the app
+- **Créer, consulter, modifier et supprimer** des notes
+- **Catégorisation** (personnel, travail, études, santé, finances, loisirs, autre)
+- **Couleurs personnalisables** pour identifier vos notes d'un coup d'œil
+- **Modal multi-modes** : création, édition et consultation détaillée
+- **Persistance cloud** via Firebase Firestore
 
-   ```bash
-   npx expo start
-   ```
+---
 
-In the output, you'll find options to open the app in a
+## Aperçu technique
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+app/index.tsx          → Écran principal (header + liste + modal)
+components/            → UI (ListNotes, ModalNotes, ListNotesItem)
+stores/notesStore.ts   → État global Zustand
+services/notesServices → CRUD Firestore
+config/firebaseConfig  → Connexion Firebase
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Flux de données :
 
-### Other setup steps
+```
+Composants UI  →  notesStore (Zustand)  →  notesServices  →  Firestore
+```
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+---
 
-## Learn more
+## Prérequis
 
-To learn more about developing your project with Expo, look at the following resources:
+- [Node.js](https://nodejs.org/) (LTS recommandé)
+- Un compte [Firebase](https://console.firebase.google.com/) avec un projet Firestore activé
+- [Expo CLI](https://docs.expo.dev/get-started/installation/) (via `npx expo`)
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+---
 
-## Join the community
+## Installation
 
-Join our community of developers creating universal apps.
+```bash
+npm install
+npx expo start
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Depuis le terminal Expo, ouvrez l'application sur :
+
+- **Android** — émulateur ou appareil physique
+- **iOS** — simulateur (macOS) ou appareil physique
+- **Web** — navigateur
+
+---
+
+## Configuration Firebase
+
+Créez un fichier `.env` à la racine du projet avec vos clés Firebase (préfixe `EXPO_PUBLIC_` requis par Expo) :
+
+```env
+EXPO_PUBLIC_FIREBASE_API_KEY=votre_api_key
+EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN=votre_projet.firebaseapp.com
+EXPO_PUBLIC_FIREBASE_PROJECT_ID=votre_projet_id
+EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET=votre_projet.appspot.com
+EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=votre_sender_id
+EXPO_PUBLIC_FIREBASE_APP_ID=votre_app_id
+```
+
+Les valeurs se trouvent dans la console Firebase : **Paramètres du projet → Vos applications → Config SDK**.
+
+Dans Firestore, les notes sont stockées dans la collection `notes`. Adaptez les règles de sécurité selon vos besoins (mode test pour le développement, règles restrictives en production).
+
+> Redémarrez le serveur Expo (`npx expo start`) après toute modification du fichier `.env`.
+
+---
+
+## Structure du projet
+
+```
+app-mobile-prise-notes/
+├── app/                  # Routes Expo Router
+│   ├── _layout.tsx       # Layout racine
+│   └── index.tsx         # Écran principal
+├── components/           # Composants UI
+│   ├── ListNotes.tsx
+│   ├── ListNotesItem.tsx
+│   └── ModalNotes.tsx
+├── config/
+│   └── firebaseConfig.ts # Initialisation Firebase
+├── constants/
+│   └── notesConstants.ts # Catégories et couleurs
+├── services/
+│   └── notesServices.ts  # Opérations Firestore
+├── stores/
+│   └── notesStore.ts     # Store Zustand
+└── types/
+    └── notesTypes.ts     # Types TypeScript
+```
+
+---
+
+## Scripts disponibles
+
+| Commande           | Description                    |
+| ------------------ | ------------------------------ |
+| `npm start`        | Lance le serveur de développement Expo |
+| `npm run android`  | Ouvre sur Android              |
+| `npm run ios`      | Ouvre sur iOS                  |
+| `npm run web`      | Ouvre dans le navigateur       |
+| `npm run lint`     | Vérifie le code avec ESLint    |
+
+---
+
+## Licence
+
+Voir le fichier [LICENSE](LICENSE).

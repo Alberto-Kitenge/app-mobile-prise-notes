@@ -1,10 +1,10 @@
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useState } from "react";
-import ModalNotes from "@/components/ModalNotes";
 import ListNotes from "@/components/ListNotes";
+import ModalNotes from "@/components/ModalNotes";
 import { ModalMode, Note } from "@/types/notesTypes";
 import { LinearGradient } from "expo-linear-gradient";
+import { useState } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
   const [selectedNote, setSelectedNote] = useState<Note | null>(null);
@@ -44,9 +44,9 @@ export default function Index() {
             <Text style={styles.subtitle}>Organisez vos idées</Text>
           </View>
 
-          <TouchableOpacity style={styles.addButton}>
+          <TouchableOpacity style={styles.addButton} onPress={handleCreateNote}>
             <View style={styles.addButtonInner}>
-              <Text>.</Text>
+              <Text>+</Text>
             </View>
           </TouchableOpacity>
         </View>

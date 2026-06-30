@@ -111,6 +111,9 @@ export default function ModalNotes({
       resetForm();
     } catch (error) {
       console.error("Erreur lors du submit du formulaire", error);
+      const errorMessage =
+        error instanceof Error ? error.message : "Une erreur est survenue";
+      Alert.alert("Erreur", errorMessage);
     } finally {
       setLoading(false);
     }
@@ -179,30 +182,31 @@ export default function ModalNotes({
     >
       <View style={styles.overlay}>
         <View style={styles.container}>
-          <View style={[styles.indicator, { backgroundColor: data.color }]}>
-            <View style={styles.header}>
-              <View style={styles.headerContent}>
-                <Text style={styles.title}>{getTitle()}</Text>
-                <Text style={styles.subtitle}>{getSubtitle()}</Text>
-              </View>
+          <View style={[styles.indicator, { backgroundColor: data.color }]} />
 
-              <View style={styles.headerActions}>
-                {isViewMode && note && (
-                  <TouchableOpacity
-                    style={styles.deleteButton}
-                    onPress={handleDelete}
-                  >
-                    <Text style={styles.deleteText}>🗑️</Text>
-                  </TouchableOpacity>
-                )}
-
-                <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-                  <Text style={styles.closeText}>❌</Text>
-                </TouchableOpacity>
-              </View>
+          <View style={styles.header}>
+            <View style={styles.headerContent}>
+              <Text style={styles.title}>{getTitle()}</Text>
+              <Text style={styles.subtitle}>{getSubtitle()}</Text>
             </View>
 
-            <ScrollView
+            <View style={styles.headerActions}>
+              {isViewMode && note && (
+                <TouchableOpacity
+                  style={styles.deleteButton}
+                  onPress={handleDelete}
+                >
+                  <Text style={styles.deleteText}>🗑️</Text>
+                </TouchableOpacity>
+              )}
+
+              <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+                <Text style={styles.closeText}>❌</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <ScrollView
               style={styles.content}
               showsVerticalScrollIndicator={false}
             >
@@ -326,6 +330,7 @@ export default function ModalNotes({
                           key={col}
                           style={[
                             styles.colorOption,
+                            { backgroundColor: col },
                             data.color === col && styles.colorSelected,
                           ]}
                           onPress={() => updateField("color", col)}
@@ -342,51 +347,50 @@ export default function ModalNotes({
                   </View>
                 </>
               )}
-            </ScrollView>
+          </ScrollView>
 
-            {!isViewMode && (
-              <View style={styles.footer}>
-                <TouchableOpacity
-                  style={styles.buttonSecondary}
-                  onPress={onClose}
-                >
-                  <Text style={styles.buttonTextSecondary}>Annuler</Text>
-                </TouchableOpacity>
+          {!isViewMode && (
+            <View style={styles.footer}>
+              <TouchableOpacity
+                style={styles.buttonSecondary}
+                onPress={onClose}
+              >
+                <Text style={styles.buttonTextSecondary}>Annuler</Text>
+              </TouchableOpacity>
 
-                <TouchableOpacity
-                  style={[
-                    styles.buttonPrimary,
-                    loading && styles.buttonDisabled,
-                  ]}
-                  onPress={handleSubmit}
-                  disabled={loading}
-                >
-                  <Text style={styles.buttonTextPrimary}>
-                    {loading
-                      ? "Enregistrement..."
-                      : isEditMode
-                        ? "Modifier"
-                        : "Créer"}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            )}
+              <TouchableOpacity
+                style={[
+                  styles.buttonPrimary,
+                  loading && styles.buttonDisabled,
+                ]}
+                onPress={handleSubmit}
+                disabled={loading}
+              >
+                <Text style={styles.buttonTextPrimary}>
+                  {loading
+                    ? "Enregistrement..."
+                    : isEditMode
+                      ? "Modifier"
+                      : "Créer"}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )}
 
-            {isViewMode && (
-              <View style={styles.footer}>
-                <TouchableOpacity style={styles.buttonPrimary} onPress={onEdit}>
-                  <Text style={styles.buttonTextPrimary}>Modifier</Text>
-                </TouchableOpacity>
+          {isViewMode && (
+            <View style={styles.footer}>
+              <TouchableOpacity style={styles.buttonPrimary} onPress={onEdit}>
+                <Text style={styles.buttonTextPrimary}>Modifier</Text>
+              </TouchableOpacity>
 
-                <TouchableOpacity
-                  style={styles.buttonSecondary}
-                  onPress={onClose}
-                >
-                  <Text style={styles.buttonTextSecondary}>Fermer</Text>
-                </TouchableOpacity>
-              </View>
-            )}
-          </View>
+              <TouchableOpacity
+                style={styles.buttonSecondary}
+                onPress={onClose}
+              >
+                <Text style={styles.buttonTextSecondary}>Fermer</Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
       </View>
     </Modal>
